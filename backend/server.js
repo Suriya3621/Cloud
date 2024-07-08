@@ -2,18 +2,19 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const admin = require('firebase-admin');
-const serviceAccount = require('./SecretKey/installar-1202.json');
+const serviceAccount = require('./SecretKey/Cloud.json');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
   });
 
   const db = admin.firestore();
-
   const app = express();
   app.use(cors());
   app.use(bodyParser.json());
-
+app.get("/",function(req,res){
+    res.redirect("/users")
+})
   // CRUD endpoints
   app.post('/users', async (req, res) => {
     try {
