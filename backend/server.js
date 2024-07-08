@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const admin = require('firebase-admin');
-const serviceAccount = require('./Secret key/installar-1202-firebase-adminsdk-wtwua-93ef6572b8.json');
+const serviceAccount = require('./SecretKey/installar-1202.json');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
