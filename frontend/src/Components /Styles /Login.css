@@ -1,0 +1,67 @@
+    @import url('https://fonts.googleapis.com/css2?family=Arsenal+SC:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+    body,
+    html {
+      height: 100%;
+      margin: 0;
+    }
+
+    .dark {
+      background-color: #2E3042;
+      color: white;
+    }
+
+    .light {
+      background-color: #DCDDEA;
+      color: black;
+    }
+
+    .bg-login-box {
+      border: none;
+      width: 100%;
+      max-width: 300px;
+      padding: 20px;
+      font-family: "Montserrat", sans-serif;
+      transition: max-width 0.3s ease, padding 0.3s ease;
+    }
+
+    .bg-login-box myInput {
+      width: 100%;
+      border-radius: 3px;
+      height: 30px;
+      border: none;
+      transition: all 0.4s ease;
+    }
+
+    .bg-login-box myInput:hover {
+      outline: none;
+      height: 30px;
+      border-radius: 3px;
+      box-shadow: 0 0 10px rgba(116, 58, 213, 0.7), 0 0 20px rgba(213, 58, 157, 0.7);
+      animation: borderGlow 1.5s infinite;
+    }
+
+    @keyframes borderGlow {
+      0%,
+      100% {
+        box-shadow: 0 0 10px rgba(116, 58, 213, 0.7), 0 0 20px rgba(213, 58, 157, 0.7);
+      }
+
+      50% {
+        box-shadow: 0 0 20px rgba(116, 58, 213, 1), 0 0 40px rgba(213, 58, 157, 1);
+      }
+    }
+
+    @media (min-width: 768px) {
+      .bg-login-box {
+        max-width: 400px;
+        padding: 30px;
+      }
+    }
+
+    @media (min-width: 992px) {
+      .bg-login-box {
+        max-width: 500px;
+        padding: 40px;
+      }
+    }
