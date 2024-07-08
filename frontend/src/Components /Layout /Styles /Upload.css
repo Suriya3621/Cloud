@@ -1,0 +1,117 @@
+/* src/Styles/FileUpload.css */
+
+.file-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.upload-row {
+  background-color: #2e2e2e;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.upload-row input {
+  margin-bottom: 10px;
+}
+
+.upload-row button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.upload-row button:hover {
+  background-color: #0056b3;
+}
+
+.file-card {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.file-dark {
+  background-color: #1d1614;
+}
+
+.file-light {
+  background-color: #fbfbfb;
+}
+
+.file-card h4 {
+  margin: 0 0 5px;
+}
+
+.file-card p {
+  margin: 5px 0;
+}
+
+.file-card a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.file-card a:hover {
+  text-decoration: underline;
+}
+
+/* Popup styles */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background-color: white;
+  padding: 5px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.popup-close {
+  position: absolute;
+  top: 270px;
+  right: 30px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color:white;
+}
+.file-upload-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* Single column layout by default */
+  gap: 20px; /* Gap between grid items */
+  padding: 20px;
+}
+
+.file-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid columns */
+  gap: 20px; /* Gap between grid items */
+}
+
+.popup {
+  /* Styles for the popup/modal */
+}
+
+/* Add more styles as needed */
