@@ -3,34 +3,34 @@ import { useCookies } from 'react-cookie';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './Components/Login.jsx';
 import Home from './Components/Home.jsx';
-import AdminPanel from './App/AdminPanel.jsx'
+import AdminPanel from './App/AdminPanel.jsx';
 import NavBar from './Components/Layout/Navbar.jsx';
 
 function App() {
-  const [passCookies] = useCookies(['pass']);
+  const [cookies] = useCookies(['pass']);
 
   return (
     <Router>
       <div>
-      <AdminPanel/>
-      
-      <div style={{ position:"fixed",width:"100%"}}>
-        <NavBar />
-       </div>
-       <div style={{ height: 3, width: "100%", backgroundColor: "blue" }}></div>
+        <AdminPanel />
+        <div style={{ position: "fixed", width: "100%" }}>
+          <NavBar />
+        </div>
+        <div style={{ height: 3, width: "100%", backgroundColor: "blue" }}></div>
         <Routes>
-         <Route
-             path="/"
-            element={passCookies.pass ? <Navigate to="/home" /> : <Navigate to="/login" />}
+          <Route 
+            path="/" 
+            element={cookies.pass ? <Navigate to="/home" /> : <Navigate to="/login" />} 
           />
-           <Route
-             path="/home"
-           element={passCookies.pass ? <Home /> : <Navigate to="/login" />}/>
-           <Route
-             path="/login"
-           element={passCookies.pass ? <Navigate to="/home" /> : <Login />}
+          <Route 
+            path="/home" 
+            element={cookies.pass ? <Home /> : <Navigate to="/login" />} 
           />
-         </Routes>      
+          <Route 
+            path="/login" 
+            element={cookies.pass ? <Navigate to="/home" /> : <Login />} 
+          />
+        </Routes>
       </div>
     </Router>
   );
