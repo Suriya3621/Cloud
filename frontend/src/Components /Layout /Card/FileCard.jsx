@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../Firebase/config.js';
-import '../Styles/FileCard.css';
+import '../Styles /FileCard.css';
 import { useCookies } from 'react-cookie';
 import { IoIosCloudDownload } from 'react-icons/io';
 import { MdDelete } from 'react-icons/md';

@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import {Link} from 'react-router-dom'
 import { Navbar, Nav, Button } from 'react-bootstrap';
 import { useCookies } from 'react-cookie';
 import { RiSunFill, RiMoonFill } from "react-icons/ri";
 import { IoIosHome } from "react-icons/io";
 import { IoLogInOutline } from "react-icons/io5";
 import { CiLogout } from "react-icons/ci";
+import { FcAbout } from "react-icons/fc";
+import './Styles /Navbar.css'
 
 const NavBar = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['theme', 'name', 'pass']);
@@ -34,19 +37,20 @@ const NavBar = () => {
   return (
     <Navbar bg={theme === "light" ? "light" : "dark"} expand="sm" className={`navbar-${theme === "light" ? "light" : "dark"} zindex-2000`}>
       <Navbar.Brand>{`Cloud Storage `||name}</Navbar.Brand>
-      <Button variant={theme === "light" ? "dark" : "light"} onClick={toggleTheme} className="position-absolute" style={{ right: '70px' }}>
+      <button onClick={toggleTheme} className={`theme-box text-${theme === "light"?"dark":"light"}`} style={{ right: '70px' }}>
         {theme === "light" ? <RiMoonFill /> : <RiSunFill />}
-      </Button>
+      </button>
       <div className="position-absolute" style={{ right: '30px', fontSize: '1.5em' }}>
         <Nav className={`mr-auto text-${theme === "light" ? "dark" : "light"}`}>
           {cookies.pass ? (
             <>
-              <Button variant="danger" style={{ right: 90, top: 6 }} className="position-absolute" onClick={logout}><CiLogout /></Button>
+              <button  style={{ right: 90, top: 6 }} className="text-danger border-0 bg-transparent position-absolute" onClick={logout}><CiLogout /></button>
               <Nav.Link href="/home"><IoIosHome /></Nav.Link>
             </>
           ) : (
             <Nav.Link href="/login"><IoLogInOutline /></Nav.Link>
           )}
+          <Link to="/about"><button><FcAbout /></button></Link>
         </Nav>
       </div>
     </Navbar>

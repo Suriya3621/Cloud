@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../Firebase/config.js";
 import { useCookies } from "react-cookie";
-import FileUpload from "./Layout/Cards/Upload";
-import './Styles/Home.css';
+import FileUpload from "./Layout /Card/Upload.jsx";
+import './Styles /Home.css';
 
 function Home() {
   const [userData, setUserData] = useState([]);

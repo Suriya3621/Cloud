@@ -3,8 +3,8 @@ import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore'
 import { db, storage } from '../../../Firebase/config.js';
 import { useCookies } from 'react-cookie';
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
-import '../Styles/Upload.css'; // Adjust path as necessary
-import FileCard from './FileCard'; // Adjust path as necessary
+import '../Styles /Upload.css'; // Adjust path as necessary
+import FileCard from './FileCard.jsx'; // Adjust path as necessary
 import { FaPlus } from 'react-icons/fa';
 import { GoUpload } from 'react-icons/go';
 

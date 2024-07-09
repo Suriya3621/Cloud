@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import './Styles/Login.css';
+import './Styles /Login.css';
 
 const Login = () => {
   const [cookies] = useCookies(['theme']);
