@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const admin = require('firebase-admin');
-const serviceAccount = require('./SecretKey/Cloud.json');
+//const serviceAccount = require('./SecretKey/Cloud.json');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
