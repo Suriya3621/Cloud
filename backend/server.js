@@ -2,18 +2,33 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const admin = require('firebase-admin');
-//const serviceAccount = require('./SecretKey/Cloud.json');
+const path = require('path');
+const fs = require('fs');
+
+const app = express();
+const PORT = process.env.PORT || 8000;
+
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());
+
+// Firebase Admin initialization
+const serviceAccountPath = path.join(__dirname, 'Cloud.json');
+
+if (!fs.existsSync(serviceAccountPath)) {
+  console.error('Service account file does not exist:', serviceAccountPath);
+  process.exit(1);
+}
+
+const serviceAccount = require(serviceAccountPath);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
 const db = admin.firestore();
-const app = express();
 
-app.use(cors());
-app.use(bodyParser.json());
-
+// Routes
 app.get("/", (req, res) => {
   res.redirect("/users");
 });
@@ -60,7 +75,7 @@ app.delete('/users/:id', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 8000;
+// Start the server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
