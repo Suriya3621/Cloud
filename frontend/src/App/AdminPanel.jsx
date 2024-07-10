@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { createUser, getUsers, updateUser, deleteUser } from './api.js';
-import { MdEdit } from "react-icons/md";
-import { MdDelete } from "react-icons/md";
+import { MdEdit, MdDelete } from "react-icons/md";
 
 const AdminPanel = () => {
   const [users, setUsers] = useState([]);
   const [newUser, setNewUser] = useState({ name: '', pass: '' });
   const [editingUser, setEditingUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const fetchedUsers = await getUsers();
-      setUsers(fetchedUsers);
+      try {
+        const fetchedUsers = await getUsers();
+        setUsers(fetchedUsers);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchUsers();
@@ -43,50 +49,58 @@ const AdminPanel = () => {
   return (
     <Container>
       <Title>Admin Panel</Title>
-      <Form>
-        <Input
-          type="text"
-          placeholder="Name"
-          maxLength="20"
-          value={newUser.name}
-          onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
-        />
-        <Input
-          type="password"
-          placeholder="Password"
-          maxLength="6"
-          minLength="6"
-          value={newUser.pass}
-          onChange={(e) => setNewUser({ ...newUser, pass: e.target.value })}
-        />
-        <Button onClick={handleAddUser}>Add User</Button>
-      </Form>
-      {editingUser && (
-        <Form>
-          <Input
-            type="text"
-            placeholder="Name"
-            value={editingUser.name}
-            onChange={(e) => setEditingUser({ ...editingUser, name: e.target.value })}
-          />
-          <Input
-            type="password"
-            placeholder="Password"
-            value={editingUser.pass}
-            onChange={(e) => setEditingUser({ ...editingUser, pass: e.target.value })}
-          />
-          <Button onClick={handleUpdateUser}>Update User</Button>
-        </Form>
+      {loading ? (
+        <LoadingSpinner>
+          <div className="spinner-border text-dark" role="status"></div>
+        </LoadingSpinner>
+      ) : (
+        <>
+          <Form>
+            <Input
+              type="text"
+              placeholder="Name"
+              maxLength="20"
+              value={newUser.name}
+              onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
+            />
+            <Input
+              type="password"
+              placeholder="Password"
+              maxLength="6"
+              minLength="6"
+              value={newUser.pass}
+              onChange={(e) => setNewUser({ ...newUser, pass: e.target.value })}
+            />
+            <Button onClick={handleAddUser}>Add User</Button>
+          </Form>
+          {editingUser && (
+            <Form>
+              <Input
+                type="text"
+                placeholder="Name"
+                value={editingUser.name}
+                onChange={(e) => setEditingUser({ ...editingUser, name: e.target.value })}
+              />
+              <Input
+                type="password"
+                placeholder="Password"
+                value={editingUser.pass}
+                onChange={(e) => setEditingUser({ ...editingUser, pass: e.target.value })}
+              />
+              <Button onClick={handleUpdateUser}>Update User</Button>
+            </Form>
+          )}
+          <UserList>
+            {users.map(user => (
+              <UserListItem key={user.id}>
+                <UserInfo>{user.name} - {user.pass}</UserInfo>
+                <ActionButton onClick={() => setEditingUser(user)} className="bg-info"><MdEdit /></ActionButton>
+                <ActionButton onClick={() => handleDeleteUser(user.id)}><MdDelete /></ActionButton>
+              </UserListItem>
+            ))}
+          </UserList>
+        </>
       )}
-      <UserList>
-        {users.map(user => (
-          <UserListItem key={user.id}>
-            <UserInfo>{user.name} - {user.pass}</UserInfo>
-            <ActionButton onClick={() => setEditingUser(user)} className="bg-info"><MdEdit /></ActionButton>
-            <ActionButton onClick={() => handleDeleteUser(user.id)}><MdDelete /></ActionButton>
-          </UserListItem>
-        ))}
-      </UserList>
     </Container>
   );
 };
@@ -106,6 +120,13 @@ const Container = styled.div`
 const Title = styled.h2`
   text-align: center;
   margin-bottom: 20px;
+`;
+
+const LoadingSpinner = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 `;
 
 const Form = styled.div`
