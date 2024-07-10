@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const admin = require('firebase-admin');
-const serviceAccount = require("/etc/secrets/<filename>");
+const serviceAccount = require("/etc/secrets/cloud.json");
 const app = express();
 const PORT = process.env.PORT || 8000;
 
