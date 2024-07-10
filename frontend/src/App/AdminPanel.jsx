@@ -90,7 +90,7 @@ const AdminPanel = () => {
               <Button onClick={handleUpdateUser}>Update User</Button>
             </Form>
           )}
-          <UserList>
+          <UserList className="text-dark">
             {users.map(user => (
               <UserListItem key={user.id}>
                 <UserInfo>{user.name} - {user.pass}</UserInfo>
