@@ -15,7 +15,7 @@ const serviceAccount = {
   private_key_id: '2394338094ea87b1882a09acb3a6785b993fcf4d',
   private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
   client_email: process.env.FIREBASE_CLIENT_EMAIL,
-  client_id: 'your_client_id',
+  client_id: '115897788671432628446',
   auth_uri: 'https://accounts.google.com/o/oauth2/auth',
   token_uri: 'https://oauth2.googleapis.com/token',
   auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
