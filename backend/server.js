@@ -2,9 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const admin = require('firebase-admin');
-const path = require('path');
-const fs = require('fs');
-
+const serviceAccount = require("./Cloud.json");
 const app = express();
 const PORT = process.env.PORT || 8000;
 
@@ -12,15 +10,6 @@ const PORT = process.env.PORT || 8000;
 app.use(cors());
 app.use(bodyParser.json());
 
-// Firebase Admin initialization
-const serviceAccountPath = path.join(__dirname, 'Cloud.json');
-
-if (!fs.existsSync(serviceAccountPath)) {
-  console.error('Service account file does not exist:', serviceAccountPath);
-  process.exit(1);
-}
-
-const serviceAccount = require(serviceAccountPath);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
