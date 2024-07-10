@@ -24,12 +24,11 @@ const Login = () => {
     } else {
       alert('Please enter your pass');
     }
-  };
+  }
 
   if (redirect) {
     return <Navigate to="/home" />;
   }
-
   return (
     <div className={`d-flex justify-content-center align-items-center ${theme} vh-100`}>
       <form className={`bg-login-box rounded bg-${theme} text-${theme === 'light'?"dark":"light"}form-control`} onSubmit={redirectFunctionHandle}>

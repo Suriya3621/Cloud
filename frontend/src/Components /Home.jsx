@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../Firebase/config.js";
 import { useCookies } from "react-cookie";
@@ -55,31 +56,32 @@ function Home() {
     // You can handle the URL here, e.g., save it to your database
   };
 
+  if (!passCookie) {
+    return <Navigate to="/login" />;
+  }
+
   return (
     <div className={`Home ${theme}`}>
       {loading ? (
         <div className="loading-spinner">
-          <div className="spinner-border text-dark" role="status">
-          </div>
+          <div className="spinner-border text-dark" role="status"></div>
         </div>
       ) : (
         userData.length > 0 ? (
           userData.map(x => (
-            <div key={x.id} className="user-data">
-              {x.pass === passCookie && (
-                <>
-                  <br />
-                  <div>{x.name}</div>
-                  <div>{x.files }</div>
-                  <div>
-                    <FileUpload folderPath={x.name} onUpload={handleFileUpload} username={x.name} />
-                  </div>
-                </>
-              )}
-            </div>
+            x.pass === passCookie && (
+              <div key={x.id} className="user-data">
+                <br />
+                <div>{x.name}</div>
+                <div>
+                  <FileUpload folderPath={x.name} onUpload={handleFileUpload} username={x.name} />
+                </div>
+              </div>
+            )
           ))
         ) : (
-          <div>No users found</div>
+          <h1>No users found</h1>
+  
         )
       )}
     </div>

@@ -1,6 +1,45 @@
-.theme-box{
-  position:absolute;
-  right:10px; 
+.theme-box {
   background-color: transparent;
-  border:none;
+  border: none;
+  outline: none;
+  transition: 0.5s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-box:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.navbar-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-icons .icon {
+  cursor: pointer;
+  font-size: 1.5em;
+  color: inherit;
+}
+
+.navbar-brand {
+  flex-grow: 1;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
+.me-auto {
+  margin-right: auto;
+}
+
+.navbar-nav .nav-link {
+  display: flex;
+  align-items: center;
+}
+.icon-size{
+  font-size:20px;
 }

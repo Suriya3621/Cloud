@@ -8,29 +8,33 @@ import AdminPanel from './App/AdminPanel';
 
 import Login from './Components /Login.jsx';
 function App() {
- const [cookies] = useCookies(['pass']);
+ const [cookies] = useCookies(['pass' ,'name']);
 
   return ( 
     <div>
     <Router>
-  
       <div>
         <div style={{ position: "fixed", width: "100%" }}>
           <NavBar />
         </div>
-        <div style={{ height: 3, width: "100%", backgroundColor: "blue" }}></div>
+      <div style={{height:3,width:"100%"}} className="bg-primary">
+      </div>
         <Routes>
           <Route
             path="/"
-            element={cookies.pass ? <Navigate to="/home" /> : <Navigate to="/login" />}
+            element={cookies.pass || cookies.name ? <Navigate to="/home" /> : <Navigate to="/login" />}
           />
           <Route
             path="/home"
-            element={cookies.pass ? <Home /> : <Navigate to="/login" />}
+            element={cookies.pass  || cookies.name ? <Home /> : <Navigate to="/login" />}
           />
           <Route
             path="/login"
-            element={cookies.pass ? <Navigate to="/home" /> : <Login />}
+            element={cookies.pass || cookies.name ? <Navigate to="/home" /> : <Login />}
+          />
+          <Route
+            path="/admin-panel"
+            element={<AdminPanel />}
           />
         </Routes>
       </div>

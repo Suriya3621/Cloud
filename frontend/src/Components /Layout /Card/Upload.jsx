@@ -7,6 +7,7 @@ import '../Styles /Upload.css'; // Adjust path as necessary
 import FileCard from './FileCard.jsx'; // Adjust path as necessary
 import { FaPlus } from 'react-icons/fa';
 import { GoUpload } from 'react-icons/go';
+import { FaSpinner } from 'react-icons/fa';
 
 function FileUpload({ folderPath = 'files', onUpload }) {
   const [file, setFile] = useState(null);
@@ -15,6 +16,7 @@ function FileUpload({ folderPath = 'files', onUpload }) {
   const [uploadRow, setUploadRow] = useState(false);
   const [cookies] = useCookies(['pass']);
   const [searchTerm, setSearchTerm] = useState('');
+  const [uploading, setUploading] = useState(false);
   const userId = cookies.pass;
 
   useEffect(() => {
@@ -33,20 +35,21 @@ function FileUpload({ folderPath = 'files', onUpload }) {
   };
 
   const handleUpload = async () => {
-  if (file) {
-    const storageRef = ref(storage, `${folderPath}/${file.name}`);
-    
-    try {
-      const snapshot = await uploadBytes(storageRef, file);
-      const downloadURL = await getDownloadURL(snapshot.ref);
-
-      addFileToFirestore(file.name, downloadURL);
-    } catch (error) {
-      console.error('Error uploading file:', error);
+    if (file) {
+      setUploading(true);
+      const storageRef = ref(storage, `${folderPath}/${file.name}`);
+      try {
+        const snapshot = await uploadBytes(storageRef, file);
+        const downloadURL = await getDownloadURL(snapshot.ref);
+        addFileToFirestore(file.name, downloadURL);
+      } catch (error) {
+        console.error('Error uploading file:', error);
+      } finally {
+        setUploading(false);
+      }
     }
-  }
-  toggleUploadRow();
-};
+    toggleUploadRow();
+  };
 
   const addFileToFirestore = async (fileName, downloadURL) => {
     try {
@@ -122,8 +125,8 @@ function FileUpload({ folderPath = 'files', onUpload }) {
                 onChange={e => setNickname(e.target.value)}
                 className="form-control"
               />
-              <button onClick={handleUpload}>
-                <GoUpload /> Upload
+              <button onClick={handleUpload} className="btn btn-primary" disabled={uploading}>
+                {uploading ? <FaSpinner className="spinner" /> : <><GoUpload /> Upload</>}
               </button>
             </div>
           </div>
