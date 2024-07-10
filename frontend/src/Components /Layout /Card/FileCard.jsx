@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../Firebase/config.js';
-import '../Styles /FileCard.css';
+import '../Styles /FileCard.css'; // Ensure there's no space in the import path
 import { useCookies } from 'react-cookie';
 import { IoIosCloudDownload } from 'react-icons/io';
 import { MdDelete } from 'react-icons/md';
@@ -46,7 +46,6 @@ function FileCard({ fileId, fileName, nickname, fileSize, fileUrl, fileUser, onD
     return fileName.split('.').pop().toLowerCase();
   };
 
-  
   // Render content based on file extension
   let fileContent;
   const fileExtension = getFileExtension(fileName);
@@ -58,7 +57,6 @@ function FileCard({ fileId, fileName, nickname, fileSize, fileUrl, fileUser, onD
         <video ref={videoRef} src={fileUrl} controls className="responsive-video">
           Your browser does not support the video tag.
         </video>
-
       </div>
     );
   } else if (['mp3'].includes(fileExtension)) {
@@ -67,7 +65,6 @@ function FileCard({ fileId, fileName, nickname, fileSize, fileUrl, fileUser, onD
         <audio ref={videoRef} src={fileUrl} controls className="responsive-audio">
           Your browser does not support the audio tag.
         </audio>
-
       </div>
     );
   } else {

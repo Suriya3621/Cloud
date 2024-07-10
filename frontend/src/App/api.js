@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'https://cloud-backend-nyi2.onrender.com/users';
+const API_URL = 'https://cloud-backend-nyi2.onrender.com';
+
 
 export const createUser = async (user) => {
   try {

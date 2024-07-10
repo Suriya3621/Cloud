@@ -1,5 +1,5 @@
 // src/App.js
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import Home from './Components /Home.jsx';
@@ -11,9 +11,14 @@ import ProtectedRoute from './App/ProtectedRoute.jsx';
 function App() {
   const [cookies] = useCookies(['pass', 'name']);
   const isAuthenticated = cookies.pass || cookies.name;
-
+  const [themeCookies] = useCookies(['theme']);
+  const [theme, setTheme] = useState(themeCookies.theme || "light"); // Default theme is "light"
+  
+  useEffect(()=>{
+    setTheme(themeCookies.theme)
+  },[themeCookies])
   return (
-    <div>
+    <div className={`${theme}`} style={{width:"100%",height:"100%"}}>
       <Router>
         <div>
           <div style={{ position: "fixed", width: "100%" }}>
@@ -27,7 +32,7 @@ function App() {
             />
             <Route
               path="/home"
-              element={<ProtectedRoute><Home /></ProtectedRoute>}
+              element={isAuthenticated ? <Home /> : <Navigate to="/login"/>}
             />
             <Route
               path="/login"
