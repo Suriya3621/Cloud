@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import './Styles /Login.css';
-
+import HelmetConfig from '../App/HelmetConfig.jsx'
 const Login = () => {
   const [cookies] = useCookies(['theme']);
   const [, setCookie] = useCookies(['pass']);
@@ -31,6 +31,10 @@ const Login = () => {
   }
   return (
     <div className={`d-flex justify-content-center align-items-center ${theme} vh-100`}>
+    <HelmetConfig
+      title="Login"
+      icon="/Icons/login.png"
+    />
       <form className={`bg-login-box rounded bg-${theme} text-${theme === 'light'?"dark":"light"}form-control`} onSubmit={redirectFunctionHandle}>
         <div className="text-center display-6 mb-3">
           <p>Login with your password</p>

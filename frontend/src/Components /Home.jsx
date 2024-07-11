@@ -5,6 +5,7 @@ import { db } from "../Firebase/config.js";
 import { useCookies } from "react-cookie";
 import FileUpload from "./Layout /Card/Upload.jsx";
 import './Styles /Home.css';
+import HelmetConfig from '../App/HelmetConfig.jsx'
 
 function Home() {
   const [userData, setUserData] = useState([]);
@@ -73,6 +74,10 @@ function Home() {
               <div key={x.id} className="user-data">
                 <br />
                 <div>{x.name}</div>
+        <HelmetConfig
+      title={x.name}
+      icon="/Icons/cloud-upload.png"
+    />
                 <div>
                   <FileUpload folderPath={x.name} onUpload={handleFileUpload} username={x.name} />
                 </div>
