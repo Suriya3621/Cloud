@@ -24,14 +24,21 @@ const ProtectedRoute = ({ children }) => {
 
   return (
     <LoginContainer>
+    <center>
       <Title>Admin Login</Title>
+      <form>
       <PasswordInput
         type="password"
         placeholder="Enter password"
         value={password}
         onChange={handlePasswordChange}
       />
+      <br/>
+      <center>
       <LoginButton onClick={handleLogin}>Login</LoginButton>
+      </center>
+      </form>
+    </center>
     </LoginContainer>
   );
 };
