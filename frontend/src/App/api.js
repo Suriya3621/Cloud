@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://cloud-backend-nyi2.onrender.com';
+const API_URL = 'https://appsail-50021345723.development.catalystappsail.in/';
 
 
 export const createUser = async (user) => {
