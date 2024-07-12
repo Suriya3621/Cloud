@@ -83,3 +83,7 @@
   border: none;
   cursor: pointer;
 }
+.preview{
+  overflow-y:hidden;
+  overflow-x:hidden;
+}

@@ -50,11 +50,11 @@ function FileCard({ fileId, fileName, nickname, fileSize, fileUrl, fileUser, onD
   let fileContent;
   const fileExtension = getFileExtension(fileName);
   if (['jpg', 'png', 'jpeg', 'svg'].includes(fileExtension)) {
-    fileContent = <img src={fileUrl} alt="File" />;
+    fileContent = <img src={fileUrl} alt="File" className="preview" />;
   } else if (['mp4'].includes(fileExtension)) {
     fileContent = (
       <div className="video-container">
-        <video ref={videoRef} src={fileUrl} controls className="responsive-video">
+        <video ref={videoRef} src={fileUrl} controls className="responsive-video preview">
           Your browser does not support the video tag.
         </video>
       </div>
@@ -62,7 +62,7 @@ function FileCard({ fileId, fileName, nickname, fileSize, fileUrl, fileUser, onD
   } else if (['mp3'].includes(fileExtension)) {
     fileContent = (
       <div className="audio-container">
-        <audio ref={videoRef} src={fileUrl} controls className="responsive-audio">
+        <audio ref={videoRef} src={fileUrl} controls className="responsive-audio preview">
           Your browser does not support the audio tag.
         </audio>
       </div>
