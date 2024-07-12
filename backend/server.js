@@ -1,18 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-<<<<<<< HEAD
 const admin = require('firebase-admin');
-const serviceAccount = require("./Secret/Cloud.json");
-=======
->>>>>>> 9a96456e2ff24d5ec3be360dfcbf56119689c6be
 const app = express();
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.X_ZOHO_CATALYST_LISTEN_PORT|| 8000;
 require("dotenv").config()
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
-const admin = require('firebase-admin');
 
 const serviceAccount = {
   type: 'service_account',
