@@ -37,7 +37,7 @@ const NavBar = () => {
   return (
     <Navbar expand="md" bg={theme} variant={theme} className={`navbar-${theme} zindex-2000`}>
       <Container>
-        <Navbar.Brand className="d-flex align-items-center">
+        <Navbar.Brand className="d-flex align-items-center nav-font">
           {name ? name : "Cloud Storage"}
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
