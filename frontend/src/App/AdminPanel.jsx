@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { db } from '../Firebase/config.js';
 import { MdEdit, MdDelete } from "react-icons/md";
-import { collection, addDoc, doc, updateDoc, deleteDoc,getDocs} from "firebase/firestore";
+import { collection, addDoc, doc, updateDoc, deleteDoc, getDocs } from "firebase/firestore";
 
 // Create User
 const createUser = async (user) => {
@@ -38,11 +38,13 @@ const deleteUser = async (id) => {
     throw error;
   }
 };
+
 const AdminPanel = () => {
   const [users, setUsers] = useState([]);
   const [newUser, setNewUser] = useState({ name: '', pass: '' });
   const [editingUser, setEditingUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   const fetchUsers = async () => {
     try {
@@ -59,6 +61,7 @@ const AdminPanel = () => {
       setUsers(results);
     } catch (err) {
       console.error('Error fetching users:', err);
+      setError('Error fetching users');
     } finally {
       setLoading(false);
     }
@@ -69,12 +72,18 @@ const AdminPanel = () => {
   }, []);
 
   const handleAddUser = async () => {
+    if (!newUser.name || !newUser.pass) {
+      alert('Name and Password fields cannot be empty.');
+      return;
+    }
     try {
       await createUser(newUser);
       await fetchUsers();
       setNewUser({ name: '', pass: '' });
+      setError('');
     } catch (error) {
       console.error('Error adding user:', error);
+      setError('Error adding user');
     }
   };
 
@@ -84,8 +93,10 @@ const AdminPanel = () => {
         await updateUser(editingUser.id, editingUser);
         await fetchUsers();
         setEditingUser(null);
+        setError('');
       } catch (error) {
         console.error('Error updating user:', error);
+        setError('Error updating user');
       }
     }
   };
@@ -94,8 +105,10 @@ const AdminPanel = () => {
     try {
       await deleteUser(userId);
       await fetchUsers();
+      setError('');
     } catch (error) {
       console.error('Error deleting user:', error);
+      setError('Error deleting user');
     }
   };
 
@@ -108,6 +121,7 @@ const AdminPanel = () => {
         </LoadingSpinner>
       ) : (
         <>
+          {error && <ErrorMessage>{error}</ErrorMessage>}
           <Form>
             <Input
               type="text"
@@ -243,4 +257,9 @@ const ActionButton = styled.button`
   &:hover {
     background-color: #c82333;
   }
+`;
+
+const ErrorMessage = styled.p`
+  color: red;
+  text-align: center;
 `;
