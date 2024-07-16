@@ -1,49 +1,102 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { createUser, getUsers, updateUser, deleteUser } from './api.js';
+import { db } from '../Firebase/config.js';
 import { MdEdit, MdDelete } from "react-icons/md";
+import { collection, addDoc, doc, updateDoc, deleteDoc,getDocs} from "firebase/firestore";
 
+// Create User
+const createUser = async (user) => {
+  try {
+    const docRef = await addDoc(collection(db, 'Users'), user);
+    return { id: docRef.id, ...user };
+  } catch (error) {
+    console.error('Error creating user:', error);
+    throw error;
+  }
+};
+
+// Update User
+const updateUser = async (id, user) => {
+  try {
+    const userDoc = doc(db, 'Users', id);
+    await updateDoc(userDoc, user);
+    return { id, ...user };
+  } catch (error) {
+    console.error('Error updating user:', error);
+    throw error;
+  }
+};
+
+// Delete User
+const deleteUser = async (id) => {
+  try {
+    const userDoc = doc(db, 'Users', id);
+    await deleteDoc(userDoc);
+    return { id };
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    throw error;
+  }
+};
 const AdminPanel = () => {
   const [users, setUsers] = useState([]);
   const [newUser, setNewUser] = useState({ name: '', pass: '' });
   const [editingUser, setEditingUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const fetchedUsers = await getUsers();
-        setUsers(fetchedUsers);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchUsers = async () => {
+    try {
+      setLoading(true);
+      const results = [];
+      const collectionsRef = collection(db, "Users");
+      const querySnapshot = await getDocs(collectionsRef);
+      querySnapshot.forEach(doc => {
+        results.push({
+          ...doc.data(),
+          id: doc.id
+        });
+      });
+      setUsers(results);
+    } catch (err) {
+      console.error('Error fetching users:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchUsers();
   }, []);
 
   const handleAddUser = async () => {
-    await createUser(newUser);
-    const updatedUsers = await getUsers();
-    setUsers(updatedUsers);
-    setNewUser({ name: '', pass: '' });
+    try {
+      await createUser(newUser);
+      await fetchUsers();
+      setNewUser({ name: '', pass: '' });
+    } catch (error) {
+      console.error('Error adding user:', error);
+    }
   };
 
   const handleUpdateUser = async () => {
     if (editingUser) {
-      await updateUser(editingUser.id, editingUser);
-      const updatedUsers = await getUsers();
-      setUsers(updatedUsers);
-      setEditingUser(null);
+      try {
+        await updateUser(editingUser.id, editingUser);
+        await fetchUsers();
+        setEditingUser(null);
+      } catch (error) {
+        console.error('Error updating user:', error);
+      }
     }
   };
 
   const handleDeleteUser = async (userId) => {
-    await deleteUser(userId);
-    const updatedUsers = await getUsers();
-    setUsers(updatedUsers);
+    try {
+      await deleteUser(userId);
+      await fetchUsers();
+    } catch (error) {
+      console.error('Error deleting user:', error);
+    }
   };
 
   return (
