@@ -98,6 +98,7 @@ function FileUpload({ folderPath = 'files', onUpload }) {
 
   return (
     <div className="file-upload-grid">
+      <div className='container'>
       <input
         type="text"
         placeholder="Search by nickname..."
@@ -105,11 +106,14 @@ function FileUpload({ folderPath = 'files', onUpload }) {
         onChange={handleSearchChange}
         className="form-control"
       />
-
-      <button onClick={toggleUploadRow} className="btn btn-info">
+      </div>
+<center>
+<button onClick={toggleUploadRow} className="btn btn-info text-align-center" style={{width:"30%"}}>
         <FaPlus /> Upload
       </button>
 
+</center>
+     
       {uploadRow && (
         <div className="popup">
           <div className="popup-content">
