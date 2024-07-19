@@ -1,10 +1,13 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { WebView } from 'react-native-webview';
+// App.js
+import React from 'react';
+import { AppRegistry } from 'react-native';
+import MyWeb from './MyWeb.js';
+import { name as appName } from './app.json';
 
-// ...
 const App = () => {
-  return <WebView source={{ uri: 'https://cloud-upload.netlify.app/' }} style={{ flex: 1 }} />;
-}
+  return <MyWeb />;
+};
+
+AppRegistry.registerComponent(appName, () => App);
 
 export default App;
