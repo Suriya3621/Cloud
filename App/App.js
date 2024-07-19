@@ -4,7 +4,7 @@ import { WebView } from 'react-native-webview';
 
 // ...
 const App = () => {
-  return <WebView source={{ uri: 'https://reactnative.dev/' }} style={{ flex: 1 }} />;
+  return <WebView source={{ uri: 'https://cloud-upload.netlify.app/s' }} style={{ flex: 1 }} />;
 }
 
 export default App;
