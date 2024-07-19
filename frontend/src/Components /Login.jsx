@@ -51,7 +51,7 @@ const Login = () => {
           <input 
             type="checkbox" 
             onChange={() => setShowPassword(!showPassword)}
-          /> Show Pass
+          /> {showPassword?"Hide":"Show"}
         </div>
         <div className="text-center">
           <button type="submit" className="btn btn-success">
