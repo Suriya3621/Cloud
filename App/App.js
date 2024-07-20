@@ -1,4 +1,3 @@
-// App.js
 import React from 'react';
 import { AppRegistry } from 'react-native';
 import MyWeb from './MyWeb.js';
