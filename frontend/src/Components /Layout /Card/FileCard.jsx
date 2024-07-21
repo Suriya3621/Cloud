@@ -1,16 +1,78 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../Firebase/config.js';
-import '../Styles /FileCard.css'; // Ensure there's no space in the import path
+import styled from 'styled-components';
 import { useCookies } from 'react-cookie';
 import { MdDelete } from 'react-icons/md';
-import ImageDownloader from './Downloader.jsx';
+import ImageDownloader from './Preview.jsx';
 
-function FileCard({ fileId, fileName, nickname, fileSize, fileUrl, fileUser, onDelete }) {
+// Styled components
+const FileCardContainer = styled.div`
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background-color: ${props => props.theme === 'dark' ? '#1d1614' : '#fbfbfb'};
+  color: ${props => props.theme === 'dark' ? 'white' : 'black'};
+`;
+
+const FileCardHeading = styled.h4`
+  margin: 0 0 5px;
+`;
+
+const FileCardSubheading = styled.h3`
+  margin: 10px 0 5px;
+`;
+
+const FileCardContent = styled.p`
+  margin: 5px 0;
+`;
+
+const DownloadLink = styled.a`
+  color: #007bff;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const DeleteButton = styled.button`
+  background: none;
+  border: none;
+  color: #dc3545;
+  cursor: pointer;
+
+  &:hover {
+    color: #c82333;
+  }
+`;
+
+const Box = styled.div`
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+`;
+
+const VideoContainer = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+const ResponsiveVideo = styled.video`
+  width: 100%;
+  height: auto;
+`;
+
+// FileCard component using styled-components
+const FileCard = ({ fileId, fileName, nickname, fileSize, fileUrl, fileUser, onDelete }) => {
   const [userData, setUserData] = useState([]);
   const [cookies] = useCookies(['theme']);
   const [theme, setTheme] = useState(cookies.theme || 'light');
-  const videoRef = useRef(null); // Ref for video or audio element
+  const videoRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,18 +85,16 @@ function FileCard({ fileId, fileName, nickname, fileSize, fileUrl, fileUser, onD
         });
         setUserData(results);
       } catch (err) {
-        console.log(err);
+        console.error('Error fetching user data:', err);
       }
     };
 
     fetchData();
-  }, []);
+  }, []); // Empty dependency array means it runs only once on mount
 
   useEffect(() => {
     setTheme(cookies.theme);
-  }, [cookies]);
-
-  const user = userData.find(user => user.id === fileUser);
+  }, [cookies]); // Update theme state when cookies.theme changes
 
   const handleDeleteClick = () => {
     if (window.confirm('Are you sure you want to delete this file?')) {
@@ -46,18 +106,17 @@ function FileCard({ fileId, fileName, nickname, fileSize, fileUrl, fileUser, onD
     return fileName.split('.').pop().toLowerCase();
   };
 
-  // Render content based on file extension
   let fileContent;
   const fileExtension = getFileExtension(fileName);
   if (['jpg', 'png', 'jpeg', 'svg'].includes(fileExtension)) {
     fileContent = <img src={fileUrl} alt="File" className="preview" />;
   } else if (['mp4'].includes(fileExtension)) {
     fileContent = (
-      <div className="video-container">
-        <video ref={videoRef} src={fileUrl} controls className="responsive-video preview">
+      <VideoContainer>
+        <ResponsiveVideo ref={videoRef} src={fileUrl} controls className="responsive-video preview">
           Your browser does not support the video tag.
-        </video>
-      </div>
+        </ResponsiveVideo>
+      </VideoContainer>
     );
   } else if (['mp3'].includes(fileExtension)) {
     fileContent = (
@@ -71,29 +130,33 @@ function FileCard({ fileId, fileName, nickname, fileSize, fileUrl, fileUser, onD
     fileContent = <h2>Extension: {fileExtension}</h2>;
   }
 
+  const user = userData.find(user => user.id === fileUser);
+
   return (
-    <div className={`file-card ${theme}`}>
-      {user && <h4>Uploaded by: {user.name}</h4>}
+    <FileCardContainer theme={theme}>
+      {user && <FileCardHeading>Uploaded by: {user.name}</FileCardHeading>}
       <div className="centered">
-        <div className="box">
+        <Box>
           {fileContent}
-        </div>
+        </Box>
       </div>
       <div>
-        <h3>{nickname}</h3>
-        <p className="text-muted">{fileName}</p>
+        <FileCardSubheading>{nickname}</FileCardSubheading>
+        <FileCardContent className="text-muted">{fileName}</FileCardContent>
       </div>
-      <p>{fileSize} MB</p>
-      {fileUrl  && (
-        <a target="_blank" rel="noopener noreferrer" >
-          <ImageDownloader url={fileUrl} />
-        </a>
+      <FileCardContent>{fileSize} MB</FileCardContent>
+      {fileUrl && (
+        <>
+          <DownloadLink href={fileUrl} target="_blank" rel="noopener noreferrer" className="download-link">
+            <ImageDownloader url={fileUrl} fileName={fileName} />
+          </DownloadLink>
+        </>
       )}
-      <button onClick={handleDeleteClick} className={`delete-button btn btn-${theme}`}>
+      <DeleteButton onClick={handleDeleteClick} className={`delete-button btn btn-${theme}`}>
         <MdDelete />
-      </button>
-    </div>
+      </DeleteButton>
+    </FileCardContainer>
   );
-}
+};
 
 export default FileCard;
