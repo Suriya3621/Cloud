@@ -3,8 +3,8 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../Firebase/config.js';
 import '../Styles /FileCard.css'; // Ensure there's no space in the import path
 import { useCookies } from 'react-cookie';
-import { IoIosCloudDownload } from 'react-icons/io';
 import { MdDelete } from 'react-icons/md';
+import ImageDownloader from './Downloader.jsx';
 
 function FileCard({ fileId, fileName, nickname, fileSize, fileUrl, fileUser, onDelete }) {
   const [userData, setUserData] = useState([]);
@@ -84,9 +84,9 @@ function FileCard({ fileId, fileName, nickname, fileSize, fileUrl, fileUser, onD
         <p className="text-muted">{fileName}</p>
       </div>
       <p>{fileSize} MB</p>
-      {fileUrl && (
-        <a href={fileUrl} target="_blank" rel="noopener noreferrer" className="download-link">
-          <IoIosCloudDownload />
+      {fileUrl  && (
+        <a target="_blank" rel="noopener noreferrer" >
+          <ImageDownloader url={fileUrl} />
         </a>
       )}
       <button onClick={handleDeleteClick} className={`delete-button btn btn-${theme}`}>
