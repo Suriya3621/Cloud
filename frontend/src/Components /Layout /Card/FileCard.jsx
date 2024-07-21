@@ -12,7 +12,7 @@ const FileCardContainer = styled.div`
   border: 1px solid #ccc;
   border-radius: 8px;
   margin-bottom: 10px;
-  background-color: ${props => props.theme === 'dark' ? '#1d1614' : '#fbfbfb'};
+  background-color: ${props => props.theme === 'dark' ? '#242424' : '#f9f9f9'};
   color: ${props => props.theme === 'dark' ? 'white' : 'black'};
 `;
 
