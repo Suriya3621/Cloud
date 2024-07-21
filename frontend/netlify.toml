@@ -1,7 +1,6 @@
 [build]
-  publish = "build"  # This should match the folder where your build output is located
-  command = "npm run build"  # Command to build your project
-
+  command = "npm install --legacy-peer-deps && npm run build"
+  publish = "build"
 [[redirects]]
   from = "/*"
   to = "/index.html"
