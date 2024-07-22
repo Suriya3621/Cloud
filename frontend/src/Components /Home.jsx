@@ -10,7 +10,7 @@ import HelmetConfig from '../App/HelmetConfig.jsx';
 function Home() {
   const [userData, setUserData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [cookies, setCookie,removeCookie] = useCookies(["pass", "name"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["pass", "name"]);
   const [themeCookies] = useCookies(['theme']);
   const [theme, setTheme] = useState(themeCookies.theme || "light");
   const [wrongPass, setWrongPass] = useState(false);
@@ -60,16 +60,18 @@ function Home() {
     console.log('File available at:', url);
     // Handle the URL here
   };
-const logout = () => {
+
+  const logout = () => {
     removeCookie("pass", { path: "/" });
     removeCookie("name", { path: "/" });
   };
+
   if (!passCookie) {
     return <Navigate to="/login" />;
   }
 
   return (
-    <div className={`Home ${theme}`}>
+    <div className={`Home bg-${theme}`}>
       <HelmetConfig
         title="Home"
         icon="/Icons/cloud-upload.png"
